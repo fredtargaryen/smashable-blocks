@@ -15,7 +15,7 @@ import java.util.List;
 public record SmashableBehaviourParent(String blockStates, List<SmashableBehaviour> behaviours) {
     public static final Codec<SmashableBehaviourParent> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.STRING.fieldOf("blockStates").forGetter(SmashableBehaviourParent::blockStates),
+                    Codec.STRING.fieldOf("blockstates").forGetter(SmashableBehaviourParent::blockStates),
                     Codec.list(SmashableBehaviour.CODEC).fieldOf("behaviours").forGetter(SmashableBehaviourParent::behaviours)
             ).apply(instance, SmashableBehaviourParent::new));
 }

@@ -22,6 +22,8 @@ public record SmashableBehaviour(String behaviour, Optional<Float> minSpeed, Opt
                     Codec.STRING.fieldOf("behaviour").forGetter(SmashableBehaviour::behaviour),
                     Codec.FLOAT.optionalFieldOf("minSpeed").forGetter(SmashableBehaviour::minSpeed),
                     Codec.FLOAT.optionalFieldOf("maxSpeed").forGetter(SmashableBehaviour::maxSpeed),
+                    Codec.FLOAT.optionalFieldOf("min_speed").forGetter(SmashableBehaviour::minSpeed),
+                    Codec.FLOAT.optionalFieldOf("max_speed").forGetter(SmashableBehaviour::maxSpeed),
                     Codec.list(SmashableBehaviourParameter.CODEC).optionalFieldOf("parameters").forGetter(SmashableBehaviour::parameters)
             ).apply(instance, SmashableBehaviour::new));
 

@@ -5,23 +5,26 @@
     "comment": "To add your own, you can edit this file, or put .json files in the smashableblocks/blocks folder of your datapack or mod.",
     "comment": "Don't make behaviours that affect blocks that are super-common in the world e.g. stone or dirt or you will probably lag horribly!",
     "comment": "This object will make Minecraft's glass panes breakable using NeoForge's c tag.",
-    "blockStates": "#c:glass_panes",
+    "blockstates": "#c:glass_panes",
     "behaviours": [
       {
         "behaviour": "break",
-        "minSpeed": 0.25
+        "min_speed": 0.25
       }
     ]
   },
   {
     "comment": "This one will let you push wooden doors open if you run into them fast enough.",
     "blockStates": "#minecraft:wooden_doors[open=false]",
+    "blockstates": "#minecraft:wooden_doors[open=false]",
     "behaviours": [
       {
         "comment": "Changing blocks in this way is silent so we'd better play a door-opening sound too.",
         "behaviour": "sound",
         "minSpeed": 0.25,
         "maxSpeed": 0.5,
+        "min_speed": 0.25,
+        "max_speed": 0.5,
         "parameters": [
           {
             "name": "sound",
@@ -34,6 +37,8 @@
         "behaviour": "change",
         "minSpeed": 0.25,
         "maxSpeed": 0.5,
+        "min_speed": 0.25,
+        "max_speed": 0.5,
         "parameters": [
           {
             "name": "newState",
@@ -44,24 +49,25 @@
       {
         "comment": "But if you hit the door too fast, you might break it off its hinges!",
         "behaviour": "break",
-        "minSpeed": 0.5
+        "min_speed": 0.5,
+        "required_weight": "heavy"
       }
     ]
   },
   {
     "comment": "This one makes TNT more volatile...",
-    "blockStates": "minecraft:tnt",
+    "blockstates": "minecraft:tnt",
     "behaviours": [
       {
         "behaviour": "explode",
-        "minSpeed": 0.3,
+        "min_speed": 0.3,
         "parameters": [
           {
             "name": "strength",
             "value": "8"
           },
           {
-            "name": "destroyBlocks",
+            "name": "destroy_blocks",
             "value": "true"
           }
         ]
@@ -70,11 +76,11 @@
   },
   {
     "comment": "Finally, this one makes bee nests fall down if shot (how rude!)",
-    "blockStates": "minecraft:bee_nest",
+    "blockstates": "minecraft:bee_nest",
     "behaviours": [
       {
         "behaviour": "fall",
-        "minSpeed": 0.25
+        "min_speed": 0.25
       }
     ]
   }

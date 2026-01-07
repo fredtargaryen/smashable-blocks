@@ -24,10 +24,10 @@ public final class ChangeBehaviour extends SmashableBehaviourInternal {
 
     public ChangeBehaviour(SmashableBehaviour sb) throws BehaviourValidationException {
         super(sb);
-        Optional<String> newState = sb.getParameterValue("newState");
-        if (newState.isEmpty()) throw BehaviourValidationException.missingParameter("newState");
+        Optional<String> newState = sb.getParameterValue("new_state");
+        if (newState.isEmpty()) throw BehaviourValidationException.missingParameter("new_state");
         BlockStateSubsetDescription bssd = BlockStateUtil.getDescriptionFromBlockStateStringGeneral(newState.get());
-        if (bssd.nameIsTag) throw new BehaviourValidationException("Cannot use a tag as a newState value");
+        if (bssd.nameIsTag) throw new BehaviourValidationException("Cannot use a tag as a new_state value");
 
         if (bssd.name.equals(BlockStateUtil.CURRENT_STATE)) {
             this.newState = Optional.empty();
@@ -66,7 +66,7 @@ public final class ChangeBehaviour extends SmashableBehaviourInternal {
     }
 
     /**
-     * Build a mapp between properties and their values using the BlockState properties string
+     * Build a map between properties and their values using the BlockState properties string
      *
      * @param properties The properties string
      * @return The built map
