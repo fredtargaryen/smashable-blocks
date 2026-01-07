@@ -30,7 +30,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import static com.fredtargaryen.smashableblocks.Tags.SMASHERS;
+import static com.fredtargaryen.smashableblocks.Tags.SMASHERS_LIGHT;
+import static com.fredtargaryen.smashableblocks.Tags.SMASHERS_HEAVY;
 
 public final class BreakSystem {
     public static final BreakSystem INSTANCE;
@@ -86,11 +87,20 @@ public final class BreakSystem {
     public void onEntityJoin(EntityJoinLevelEvent event) {
         Entity e = event.getEntity();
         if (!event.getLevel().isClientSide()) {
+            Smasher s = new DefaultSmasherImpl(e);
             EntityType<?> et = e.getType();
-            // Add most appropriate entities by default because it's easier than trying to add them all to the tags
-            if ((e instanceof LivingEntity && !this.isMobCategoryExempt(et.getCategory()))
-                    || et.is(SMASHERS)) {
-                Smasher s = new DefaultSmasherImpl(e);
+            if (et.is(SMASHERS_LIGHT)) {
+                s.setWeight(DataReference.SMASHER_WEIGHT_LIGHT);
+                e.setData(AttachmentTypes.SMASHER, s);
+            }
+            else if(et.is(SMASHERS_HEAVY)) {
+                s.setWeight(DataReference.SMASHER_WEIGHT_HEAVY);
+                e.setData(AttachmentTypes.SMASHER, s);
+            }
+            // Add most appropriate entities by default because it's easier than trying to add them all to the tags.
+            // They would usually count as heavy but if an entity should be light it can be added to the SMASHERS_LIGHT tag
+            else if (e instanceof LivingEntity && !this.isMobCategoryExempt(et.getCategory())) {
+                s.setWeight(DataReference.SMASHER_WEIGHT_HEAVY);
                 e.setData(AttachmentTypes.SMASHER, s);
             }
         }

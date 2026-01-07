@@ -10,6 +10,7 @@ public final class DefaultSmasherImpl implements Smasher {
     private Vec3 prevPosition = null;
     private Vec3 position = null;
     private Vec3 movement = null;
+    private byte weight;
 
     public DefaultSmasherImpl(Entity e) {
         this.attachedEntity = e;
@@ -36,5 +37,15 @@ public final class DefaultSmasherImpl implements Smasher {
     @Override
     public byte getBreakRangeMultiplier() {
         return 2;
+    }
+
+    @Override
+    public void setWeight(byte weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public byte getWeight() {
+        return this.weight;
     }
 }

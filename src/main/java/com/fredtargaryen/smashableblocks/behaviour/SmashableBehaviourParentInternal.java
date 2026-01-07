@@ -2,6 +2,8 @@
 // See README.md for full copyright notice
 package com.fredtargaryen.smashableblocks.behaviour;
 
+import com.fredtargaryen.smashableblocks.AttachmentTypes;
+import com.fredtargaryen.smashableblocks.DataReference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -19,6 +21,7 @@ public final class SmashableBehaviourParentInternal {
 
     /**
      * This method executes when an entity with the Smasher capability is about to collide with the block with this set of behaviours.
+     *
      * @param level   The Level in which the collision will take place
      * @param smasher The entity doing the collision
      * @param pos     The position of the block to be collided with
@@ -29,7 +32,10 @@ public final class SmashableBehaviourParentInternal {
     public void onSmash(Level level, Entity smasher, BlockPos pos, BlockState state, float speedSq, BlockEntity be) {
         this.behaviours.forEach(sbi -> {
             if (speedSq >= sbi.minSpeedSq && speedSq < sbi.maxSpeedSq) {
-                sbi.onSmash(level, smasher, pos, state, speedSq, be);
+                if (sbi.requiredWeight == DataReference.SMASHER_WEIGHT_ANY
+                        || (sbi.requiredWeight == smasher.getData(AttachmentTypes.SMASHER.get()).getWeight())) {
+                    sbi.onSmash(level, smasher, pos, state, speedSq, be);
+                }
             }
         });
     }

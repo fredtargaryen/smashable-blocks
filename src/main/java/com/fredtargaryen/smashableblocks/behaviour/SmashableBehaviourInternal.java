@@ -9,6 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
+
 /**
  * A "compiled" version of SmashableBehaviour which takes and transforms the necessary data from the json file
  * and discards the unnecessary information. Custom behaviours must extend this class.
@@ -24,6 +26,8 @@ public abstract class SmashableBehaviourInternal {
      */
     public final float maxSpeedSq;
 
+    public final byte requiredWeight;
+
     public SmashableBehaviourInternal(SmashableBehaviour sb) throws BehaviourValidationException {
         float minSpeed = sb.minSpeed().orElse(DataReference.MINIMUM_ENTITY_SPEED);
         float maxSpeed = sb.maxSpeed().orElse(DataReference.MAXIMUM_ENTITY_SPEED);
@@ -31,6 +35,23 @@ public abstract class SmashableBehaviourInternal {
         if (maxSpeed > DataReference.MAXIMUM_ENTITY_SPEED) throw new BehaviourValidationException("max_speed %s cannot be greater than %s", maxSpeed, DataReference.MAXIMUM_ENTITY_SPEED);
         this.minSpeedSq = minSpeed * minSpeed;
         this.maxSpeedSq = maxSpeed * maxSpeed;
+        Optional<String> requiredWeight = sb.requiredWeight();
+        if (requiredWeight.isPresent()) {
+            String s = requiredWeight.get().toLowerCase();
+            if (s.equals("light")) {
+                this.requiredWeight = DataReference.SMASHER_WEIGHT_LIGHT;
+            }
+            else if (s.equals("heavy")) {
+                this.requiredWeight = DataReference.SMASHER_WEIGHT_HEAVY;
+            }
+            else {
+                throw new BehaviourValidationException("required_weight (\"%s\") must be \"light\", \"heavy\" or not be specified at all", s);
+            }
+        }
+        else
+        {
+            this.requiredWeight = DataReference.SMASHER_WEIGHT_ANY;
+        }
     }
 
     /**

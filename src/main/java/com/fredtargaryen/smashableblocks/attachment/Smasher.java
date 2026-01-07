@@ -28,4 +28,16 @@ public interface Smasher {
      * also used for players to try to compromise for the latency of speed updates from the client.
      */
     byte getBreakRangeMultiplier();
+
+    /**
+     * Sets the entity's "weight"
+     * @param weight The weight value (meaning "light" or "heavy"), which determines which blocks it can activate
+     */
+    void setWeight(byte weight);
+
+    /**
+     * Gets the entity's "weight"
+     * @return The weight value (meaning "light" or "heavy"), which determines which blocks it can activate
+     */
+    byte getWeight();
 }

@@ -37,8 +37,7 @@ public class DataReference {
     public static final float MAXIMUM_ENTITY_SPEED = 5.8926f;
     public static final float MAXIMUM_ENTITY_SPEED_SQUARED = MAXIMUM_ENTITY_SPEED * MAXIMUM_ENTITY_SPEED;
 
-    public static final ResourceLocation BREAK_LOCATION = new ResourceLocation(DataReference.MODID, "ibreakcapability");
-    public static final ResourceLocation PLAYER_BREAK_LOCATION = new ResourceLocation(DataReference.MODID, "ibreakcapability2");
-
-    public static final ResourceLocation FRAGILE_CAP_LOCATION = new ResourceLocation(DataReference.MODID, "ifragilecapability");
+    public static final byte SMASHER_WEIGHT_LIGHT = 0;
+    public static final byte SMASHER_WEIGHT_HEAVY = 1;
+    public static final byte SMASHER_WEIGHT_ANY = 2;
 }

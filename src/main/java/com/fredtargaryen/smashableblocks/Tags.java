@@ -7,5 +7,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
 public class Tags {
-    public static final TagKey<EntityType<?>> SMASHERS = TagKey.create(Registries.ENTITY_TYPE, DataReference.getResourceLocation("smashers"));
+    public static final TagKey<EntityType<?>> SMASHERS_LIGHT = TagKey.create(Registries.ENTITY_TYPE, DataReference.getResourceLocation("smashers_light"));
+    public static final TagKey<EntityType<?>> SMASHERS_HEAVY = TagKey.create(Registries.ENTITY_TYPE, DataReference.getResourceLocation("smashers_heavy"));
 }

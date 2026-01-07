@@ -15,16 +15,15 @@
   },
   {
     "comment": "This one will let you push wooden doors open if you run into them fast enough.",
-    "blockStates": "#minecraft:wooden_doors[open=false]",
+    "comment": "It uses the weight system so the doors are only opened by 'heavy' things like players, not 'light' things like arrows.",
     "blockstates": "#minecraft:wooden_doors[open=false]",
     "behaviours": [
       {
         "comment": "Changing blocks in this way is silent so we'd better play a door-opening sound too.",
         "behaviour": "sound",
-        "minSpeed": 0.25,
-        "maxSpeed": 0.5,
         "min_speed": 0.25,
         "max_speed": 0.5,
+        "required_weight": "heavy",
         "parameters": [
           {
             "name": "sound",
@@ -35,13 +34,12 @@
       {
         "comment": "Here, we're saying, 'change into exactly the block you currently are, but with the open property set to true'.",
         "behaviour": "change",
-        "minSpeed": 0.25,
-        "maxSpeed": 0.5,
         "min_speed": 0.25,
         "max_speed": 0.5,
+        "required_weight": "heavy",
         "parameters": [
           {
-            "name": "newState",
+            "name": "new_state",
             "value": "-[open=true]"
           }
         ]

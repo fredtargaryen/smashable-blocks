@@ -13,17 +13,17 @@ import java.util.Optional;
  * @param behaviour The behaviour represented. Used by SmashableImporter to map to a SmashableBehaviourInternal
  * @param minSpeed The minimum speed of a colliding entity to trigger the behaviour
  * @param maxSpeed The maximum speed of a colliding entity to trigger the behaviour
+ * @param requiredWeight Either "light" or "heavy" depending on the kind of smasher that can trigger the behaviour. If null, any weight is valid
  * @param parameters Extra data which may be used by children of SmashableBehaviourInternal
  */
-public record SmashableBehaviour(String behaviour, Optional<Float> minSpeed, Optional<Float> maxSpeed,
+public record SmashableBehaviour(String behaviour, Optional<Float> minSpeed, Optional<Float> maxSpeed, Optional<String> requiredWeight,
                                  Optional<List<SmashableBehaviourParameter>> parameters) {
     public static final Codec<SmashableBehaviour> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.STRING.fieldOf("behaviour").forGetter(SmashableBehaviour::behaviour),
-                    Codec.FLOAT.optionalFieldOf("minSpeed").forGetter(SmashableBehaviour::minSpeed),
-                    Codec.FLOAT.optionalFieldOf("maxSpeed").forGetter(SmashableBehaviour::maxSpeed),
                     Codec.FLOAT.optionalFieldOf("min_speed").forGetter(SmashableBehaviour::minSpeed),
                     Codec.FLOAT.optionalFieldOf("max_speed").forGetter(SmashableBehaviour::maxSpeed),
+                    Codec.STRING.optionalFieldOf("required_weight").forGetter(SmashableBehaviour::requiredWeight),
                     Codec.list(SmashableBehaviourParameter.CODEC).optionalFieldOf("parameters").forGetter(SmashableBehaviour::parameters)
             ).apply(instance, SmashableBehaviour::new));
 
