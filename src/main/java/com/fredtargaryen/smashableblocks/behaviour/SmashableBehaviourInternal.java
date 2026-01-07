@@ -27,8 +27,8 @@ public abstract class SmashableBehaviourInternal {
     public SmashableBehaviourInternal(SmashableBehaviour sb) throws BehaviourValidationException {
         float minSpeed = sb.minSpeed().orElse(DataReference.MINIMUM_ENTITY_SPEED);
         float maxSpeed = sb.maxSpeed().orElse(DataReference.MAXIMUM_ENTITY_SPEED);
-        if (minSpeed < 0f) throw new BehaviourValidationException("minSpeed %s cannot be less than 0", minSpeed);
-        if (maxSpeed > DataReference.MAXIMUM_ENTITY_SPEED) throw new BehaviourValidationException("maxSpeed %s cannot be greater than %s", maxSpeed, DataReference.MAXIMUM_ENTITY_SPEED);
+        if (minSpeed < 0f) throw new BehaviourValidationException("min_speed %s cannot be less than 0", minSpeed);
+        if (maxSpeed > DataReference.MAXIMUM_ENTITY_SPEED) throw new BehaviourValidationException("max_speed %s cannot be greater than %s", maxSpeed, DataReference.MAXIMUM_ENTITY_SPEED);
         this.minSpeedSq = minSpeed * minSpeed;
         this.maxSpeedSq = maxSpeed * maxSpeed;
     }
