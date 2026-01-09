@@ -1,0 +1,9 @@
+{
+    "values": [
+        "#c:boats",
+        "minecraft:falling_block",
+        "minecraft:minecart",
+        "minecraft:player",
+        "minecraft:tnt"
+    ]
+}
