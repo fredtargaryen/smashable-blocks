@@ -41,7 +41,7 @@ public final class SmashableImporter {
             SmashableBlocksBase.warn(String.format("Overwriting an existing behaviour for the behaviour '%s'!", behaviourName));
         }
         else {
-            SmashableBlocksBase.info(String.format("Adding new behaviour %s", behaviourName));
+            SmashableBlocksBase.info(String.format("Adding third-party smashable behaviour %s", behaviourName));
         }
         behaviourFactories.put(behaviourName, behaviourFactory);
     }
@@ -56,7 +56,7 @@ public final class SmashableImporter {
                     List<SmashableBehaviourParent> parents = entry.getValue();
                     parents.forEach(sbp -> {
                         String states = sbp.blockStates();
-                        SmashableBlocksBase.warn(String.format("Now parsing %s", states));
+                        SmashableBlocksBase.warn(String.format("Loading behaviours for %s", states));
 
                         try {
                             // Parse blockStates string into a list of BlockStates to apply behaviours to
