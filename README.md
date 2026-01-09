@@ -2,6 +2,8 @@
 Smashable Blocks is a Minecraft NeoForge utility mod which, via a json file interface, allows customisation of the behaviour of any block when smashed (here defined as collided with at speed).
 The classic use case is to make glass blocks fragile, so that a player could fall or fire an arrow through them, but there are countless other possibilities.
 
+For multiplayer, Smashable Blocks only needs to be installed server-side.
+
 ### Customising Smashable Blocks
 You don't need to make a mod to customise which blocks can be smashed; the minimum you need is a datapack.
 Examples of how to customise blocks' behaviour in a json file can be found [here](https://github.com/fredtargaryen/smashable-blocks/blob/master/src/main/resources/data/smashableblocks/smashableblocks/blocks/examples).
