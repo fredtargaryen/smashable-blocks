@@ -36,8 +36,6 @@ import static com.fredtargaryen.smashableblocks.Tags.SMASHERS_HEAVY;
 public final class BreakSystem {
     public static final BreakSystem INSTANCE;
 
-    public static int smasherCount = 0;
-
     private final HashMap<Block, SmashableBehaviourParentInternal> blockBehaviourMap;
     private final HashSet<Block> blocksWithStateOverrides;
     private final HashMap<BlockState, SmashableBehaviourParentInternal> stateBehaviourMap;

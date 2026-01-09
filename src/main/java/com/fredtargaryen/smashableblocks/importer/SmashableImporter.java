@@ -36,6 +36,9 @@ public final class SmashableImporter {
         if (behaviourFactories.containsKey(behaviourName)) {
             SmashableBlocksBase.warn(String.format("Overwriting an existing behaviour for the behaviour '%s'!", behaviourName));
         }
+        else {
+            SmashableBlocksBase.info(String.format("Adding new behaviour %s", behaviourName));
+        }
         behaviourFactories.put(behaviourName, behaviourFactory);
     }
 

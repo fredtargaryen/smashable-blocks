@@ -9,6 +9,11 @@ import net.neoforged.bus.api.Event;
 
 import java.util.function.Function;
 
+/**
+ * This event is fired during BreakSystem setup, allowing mods to register their custom smash behaviours.
+ * This event does not have a result.
+ * This event is fired on the NeoForge.EVENT_BUS.
+ */
 public final class AddSmashableBehavioursEvent extends Event {
     private final SmashableImporter importer;
 
