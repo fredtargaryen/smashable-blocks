@@ -24,6 +24,10 @@ public final class SmashableImporter {
         this.behaviourFactories = new HashMap<>();
     }
 
+    public void resetBehaviours() {
+        this.behaviourFactories.clear();
+    }
+
     public void addDefaultBehaviourFactories() {
         this.behaviourFactories.put("break", BreakBehaviour::new);
         this.behaviourFactories.put("change", ChangeBehaviour::new);

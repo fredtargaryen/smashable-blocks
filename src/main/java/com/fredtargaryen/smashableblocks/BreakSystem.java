@@ -54,13 +54,11 @@ public final class BreakSystem {
         NeoForge.EVENT_BUS.register(this);
     }
 
-    public void setup() {
+    public void setup(MinecraftServer server) {
+        this.smashableImporter.resetBehaviours();
         this.smashableImporter.addDefaultBehaviourFactories();
         NeoForge.EVENT_BUS.post(new AddSmashableBehavioursEvent(this.smashableImporter));
-    }
-
-    public void importBlockBehaviours(MinecraftServer ms) {
-        this.smashableImporter.collectAndImportBehaviourFiles(ms, this.blockBehaviourMap, this.blocksWithStateOverrides, this.stateBehaviourMap);
+        this.smashableImporter.collectAndImportBehaviourFiles(server, this.blockBehaviourMap, this.blocksWithStateOverrides, this.stateBehaviourMap);
     }
 
     /**

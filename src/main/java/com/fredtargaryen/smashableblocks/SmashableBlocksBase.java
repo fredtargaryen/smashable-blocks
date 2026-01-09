@@ -4,7 +4,6 @@ package com.fredtargaryen.smashableblocks;
 
 import com.fredtargaryen.smashableblocks.registry.CustomRegistries;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -12,7 +11,6 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import org.slf4j.Logger;
@@ -30,7 +28,6 @@ public final class SmashableBlocksBase {
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public SmashableBlocksBase(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addModRegistries);
 
         AttachmentTypes.register(modEventBus);
@@ -41,18 +38,13 @@ public final class SmashableBlocksBase {
         //modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        BreakSystem.INSTANCE.setup();
-    }
-
-    //@SubscribeEvent
     private void addModRegistries(DataPackRegistryEvent.NewRegistry event) {
         CustomRegistries.onDataPackRegistry(event);
     }
 
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
-        BreakSystem.INSTANCE.importBlockBehaviours(event.getServer());
+        BreakSystem.INSTANCE.setup(event.getServer());
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
