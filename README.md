@@ -11,20 +11,24 @@ Just create a `<your namespace>/smashableblocks/blocks/<your filename>.json` fil
 You can have as many such files as you want and their names are up to you. If you're single-player you can just rename the `examples` file in the mod jar to `<your filename>.json` and edit the `blocks` folder to your liking.
 
 ### Customising Which Entities Can Smash Blocks
-Two entity type tags define which entities can smash blocks:
-- Entities in the `smashableblocks:smashers_light` tag are considered lightweight, such as arrows and fireworks.
-- Entities in the `smashableblocks:smashers_heavy` tag are considered heavyweight, such as players, horses, minecarts and creepers.
+Three entity type tags help define which entities can smash blocks:
+- Entities in the `smashableblocks:excluded` tag cannot smash blocks.
+- Entities in the `smashableblocks:smashers_light` tag can smash blocks. They are considered lightweight, such as arrows and fireworks.
+- Entities in the `smashableblocks:smashers_heavy` tag can smash blocks. They are considered heavyweight, such as players, horses, minecarts and creepers.
 
 You can customise which entities are in which tags in your own mod or datapack.
 
-When a new entity joins the level, Smashable Blocks checks for its presence in either tag and assigns it the corresponding weight, which may affect which blocks it can smash. An example of how weight can be used is given in the above link.
+When a new entity joins the level, Smashable Blocks searches for its entity type in the above tags, in the above order.
+If it isn't excluded, it is assigned the corresponding weight, which may affect which blocks it can smash. 
+An example of how weight can be used is given in the above link.
 
 If the entity:
-- is in neither tag
+- is in none of the above tags
 - is a so-called 'living entity' such as a pig or zombie
 - is not in the `AMBIENT`, `MISC` or `WATER_AMBIENT` entity categories
 
-It will be assigned a heavy weight. This is because that would be accurate for most entities matching that description, and avoids the need for very long tag files to contain every living entity, as well as the need for mods to add their entities to the tag to work with Smashable Blocks.
+It will be assigned a heavy weight.
+This would be accurate for most entities matching that description, but the main reasons are to avoid the need for very long tag files to contain every living entity, as well as the need for mods to add their entities to the tag to work with Smashable Blocks.
 
 ### Issues
 Please report any issues on [the Issues page](https://github.com/fredtargaryen/smashable-blocks/issues).

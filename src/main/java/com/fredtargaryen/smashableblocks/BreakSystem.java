@@ -30,8 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import static com.fredtargaryen.smashableblocks.Tags.SMASHERS_LIGHT;
-import static com.fredtargaryen.smashableblocks.Tags.SMASHERS_HEAVY;
+import static com.fredtargaryen.smashableblocks.Tags.*;
 
 public final class BreakSystem {
     public static final BreakSystem INSTANCE;
@@ -85,6 +84,7 @@ public final class BreakSystem {
         if (!event.getLevel().isClientSide()) {
             Smasher s = new DefaultSmasherImpl(e);
             EntityType<?> et = e.getType();
+            if (et.is(EXCLUDED)) return;
             if (et.is(SMASHERS_LIGHT)) {
                 s.setWeight(DataReference.SMASHER_WEIGHT_LIGHT);
                 e.setData(AttachmentTypes.SMASHER, s);
