@@ -6,7 +6,7 @@ For multiplayer, Smashable Blocks only needs to be installed server-side.
 
 ### Customising Smashable Blocks
 You don't need to make a mod to customise which blocks can be smashed; the minimum you need is a datapack.
-Examples of how to customise blocks' behaviour in a json file can be found [here](https://github.com/fredtargaryen/smashable-blocks/blob/master/src/main/resources/data/smashableblocks/smashableblocks/blocks/examples).
+Examples of how to customise blocks' behaviour in a json file can be found [here](https://github.com/fredtargaryen/smashable-blocks/blob/main/src/main/resources/data/smashableblocks/smashableblocks/blocks/examples).
 Just create a `<your namespace>/smashableblocks/blocks/<your filename>.json` file in your `data` folder and add the blocks; Smashable Blocks will identify them.
 You can have as many such files as you want and their names are up to you. If you're single-player you can just rename the `examples` file in the mod jar to `<your filename>.json` and edit the `blocks` folder to your liking.
 
