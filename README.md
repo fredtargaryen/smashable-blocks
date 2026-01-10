@@ -59,9 +59,8 @@ If you choose a behaviour name that was already added to `SmashableImporter` you
 
 ### Releases
 You can find the latest Smashable Blocks release files at:
-- [CurseForge]()
+- CurseForge (link pending)
 - [Modrinth](https://modrinth.com/project/smashable-blocks/versions)
-- [My github.io page]()
 
 ### Pull Requests
 Any pull requests are very welcome. There are currently no standards for pull requests but clean code which
