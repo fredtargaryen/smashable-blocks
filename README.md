@@ -46,6 +46,8 @@ You normally **do not** need to add Smashable Blocks as a dependency.
 
 If you want to add custom behaviour types in your mod, you **will** need to add Smashable Blocks as a dependency.
 Follow the instructions [here](https://docs.neoforged.net/toolchain/docs/dependencies/) to do so.
+Example build.gradle dependencies:
+- CurseMaven: `api "curse.maven:smashableblocks-1425006:7439708-sources-7439708"`
 
 Your custom behaviour class must extend `SmashableBehaviourInternal`. Make a `Function<SmashableBehaviour, SmashableBehaviourInternal>` - which can just be your behaviour's constructor, taking a `SmashableBehaviour` as a parameter.
 Then subscribe to `AddSmashableBehavioursEvent` on `NeoForge.EVENT_BUS`, passing in that function; for example:
