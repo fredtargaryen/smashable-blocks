@@ -59,7 +59,7 @@ If you choose a behaviour name that was already added to `SmashableImporter` you
 
 ### Releases
 You can find the latest Smashable Blocks release files at:
-- CurseForge (link pending)
+- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/smashable-blocks)
 - [Modrinth](https://modrinth.com/project/smashable-blocks/versions)
 
 ### Pull Requests
