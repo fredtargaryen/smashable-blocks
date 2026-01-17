@@ -1,0 +1,36 @@
+[
+  {
+    "comment": "This file contains examples of how you can use Smashable Blocks to make certain blocks fragile.",
+    "comment": "Don't make behaviours that affect blocks that are super-common in the world e.g. stone or dirt or you can quickly ruin your terrain!",
+    "comment": "This object will make vanilla and modded glass panes breakable using NeoForge's c tag.",
+    "blockstates": "#c:glass_panes",
+    "behaviours": [
+      {
+        "behaviour": "break",
+        "min_speed": 0.25
+      }
+    ]
+  },
+  {
+    "comment": "This one makes full glass blocks harder to break, and only breakable by 'heavy' things like players, not 'light' things like arrows.",
+    "blockstates": "#c:glass_blocks",
+    "behaviours": [
+      {
+        "behaviour": "break",
+        "min_speed": 0.35,
+        "required_weight": "heavy"
+      }
+    ]
+  },
+  {
+    "comment": "This one does the same for glowstone blocks.",
+    "blockstates": "minecraft:glowstone",
+    "behaviours": [
+      {
+        "behaviour": "break",
+        "min_speed": 0.35,
+        "required_weight": "heavy"
+      }
+    ]
+  }
+]
