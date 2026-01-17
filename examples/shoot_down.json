@@ -1,0 +1,27 @@
+[
+  {
+    "comment": "This file contains examples of how you can use Smashable Blocks to make it possible to shoot blocks down.",
+    "comment": "Don't make behaviours that affect blocks that are super-common in the world e.g. stone or dirt or you can quickly ruin your terrain!",
+    "comment": "This object will let you shoot cocoa beans off jungle trees - no need to climb up to them.",
+    "comment": "For convenience, this is written so that only ripe pods break this way.",
+    "blockstates": "minecraft:cocoa[age=2]",
+    "behaviours": [
+      {
+        "behaviour": "break",
+        "min_speed": 0.25,
+        "required_weight": "light"
+      }
+    ]
+  },
+  {
+    "comment": "This one makes bee nests fall down if shot (how rude!)",
+    "blockstates": "minecraft:bee_nest",
+    "behaviours": [
+      {
+        "behaviour": "fall",
+        "min_speed": 0.25,
+        "required_weight": "light"
+      }
+    ]
+  }
+]
