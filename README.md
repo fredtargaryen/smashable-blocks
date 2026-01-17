@@ -2,7 +2,13 @@
 Smashable Blocks is a Minecraft NeoForge utility mod which, via a json file interface, allows customisation of the behaviour of any block when smashed (here defined as collided with at speed).
 The classic use case is to make glass blocks fragile, so that a player could fall or fire an arrow through them, but there are countless other possibilities.
 
+### Installation
 For multiplayer, Smashable Blocks only needs to be installed server-side.
+
+### Releases
+You can find the latest Smashable Blocks release files at:
+- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/smashable-blocks)
+- [Modrinth](https://modrinth.com/project/smashable-blocks/versions)
 
 ### Customising Smashable Blocks
 You don't need to make a mod to customise which blocks can be smashed; the minimum you need is a datapack.
@@ -31,9 +37,9 @@ It will be assigned a heavy weight.
 This would be accurate for most entities matching that description, but the main reasons are to avoid the need for very long tag files to contain every living entity, as well as the need for mods to add their entities to the tag to work with Smashable Blocks.
 
 ### Issues
-Please report any issues on [the Issues page](https://github.com/fredtargaryen/smashable-blocks/issues).
+Please report any issues on the [Issues page](https://github.com/fredtargaryen/smashable-blocks/issues).
 
-## Information for developers
+## Information for Developers
 
 ### Customising block behaviour
 
@@ -46,8 +52,8 @@ You normally **do not** need to add Smashable Blocks as a dependency.
 
 If you want to add custom behaviour types in your mod, you **will** need to add Smashable Blocks as a dependency.
 Follow the instructions [here](https://docs.neoforged.net/toolchain/docs/dependencies/) to do so.
-Example build.gradle dependencies:
-- CurseMaven: `api "curse.maven:smashableblocks-1425006:7439708-sources-7439708"`
+Example build.gradle dependency:
+- CurseMaven: `api "curse.maven:smashableblocks-1425006:7439708-sources-7439708"`, replacing `7439708` with the long number at the end of the URL of the version you need.
 
 Your custom behaviour class must extend `SmashableBehaviourInternal`. Make a `Function<SmashableBehaviour, SmashableBehaviourInternal>` - which can just be your behaviour's constructor, taking a `SmashableBehaviour` as a parameter.
 Then subscribe to `AddSmashableBehavioursEvent` on `NeoForge.EVENT_BUS`, passing in that function; for example:
@@ -58,11 +64,6 @@ public static void addCustomBehaviours(AddSmashableBehavioursEvent event) {
 }
 ```
 If you choose a behaviour name that was already added to `SmashableImporter` you will overwrite it, so unless you really want to, choose a unique name for your custom behaviour. You could call it `"mymod:mybehaviourname"`, `ResourceLocation`-style.
-
-### Releases
-You can find the latest Smashable Blocks release files at:
-- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/smashable-blocks)
-- [Modrinth](https://modrinth.com/project/smashable-blocks/versions)
 
 ### Pull Requests
 Any pull requests are very welcome. There are currently no standards for pull requests but clean code which
