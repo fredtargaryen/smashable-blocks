@@ -9,7 +9,7 @@ public class DataReference {
     public static final String MODID = "smashableblocks";
 
     public static ResourceLocation getResourceLocation(String path) {
-        return new ResourceLocation(MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 
     //The minimum speed a permitted entity must be travelling to break a fragile glass block.

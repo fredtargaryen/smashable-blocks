@@ -53,7 +53,7 @@ public class BlockStateUtil {
         if (description.nameIsTag) {
             try {
                 // Get all blocks under the tag named in description
-                TagKey<Block> tag = BlockTags.create(ResourceLocation.of(description.name, ':'));
+                TagKey<Block> tag = BlockTags.create(ResourceLocation.parse(description.name));
                 blocks = BuiltInRegistries.BLOCK.getTag(tag).get().stream().map(Holder::value).toList();
             } catch (NoSuchElementException nsee) {
                 throw new BehaviourValidationException(String.format("The tag string '%s' does not exist.", description.name));
@@ -94,7 +94,7 @@ public class BlockStateUtil {
     }
 
     public static Block getBlockFromString(String state) {
-        return BuiltInRegistries.BLOCK.get(new ResourceLocation(state));
+        return BuiltInRegistries.BLOCK.get(ResourceLocation.parse(state));
     }
 
     /**
