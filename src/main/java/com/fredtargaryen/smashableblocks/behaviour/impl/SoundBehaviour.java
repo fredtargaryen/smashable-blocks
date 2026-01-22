@@ -25,7 +25,9 @@ public final class SoundBehaviour extends SmashableBehaviourInternal {
         Optional<String> soundResLoc = sb.getParameterValue("sound");
         if (soundResLoc.isEmpty()) throw BehaviourValidationException.missingParameter("sound");
         String soundLocation = soundResLoc.get();
-        SoundEvent se = BuiltInRegistries.SOUND_EVENT.get(new ResourceLocation(soundLocation));
+        ResourceLocation rl = ResourceLocation.tryParse(soundLocation);
+        if (rl == null) throw new BehaviourValidationException("Invalid sound resource location '%s'", soundLocation);
+        SoundEvent se = BuiltInRegistries.SOUND_EVENT.get(rl);
         if (se == null) {
             throw new BehaviourValidationException("Unrecognised sound resource location '%s'", soundLocation);
         }
