@@ -189,13 +189,17 @@ public final class BreakSystem {
      * @param breakRangeMultiplier Scaling of the movement vector to compensate for lag
      */
     private void attemptToSmashBlocksInWay2(Entity e, Vec3 movement, byte breakRangeMultiplier) {
-        Level level = e.level();
         // Get starting point
         Vec3 entityPos = e.position();
         Vec3 startPos = new Vec3(
                 entityPos.x - Math.floor(entityPos.x),
                 entityPos.y - Math.floor(entityPos.y),
                 entityPos.z - Math.floor(entityPos.z));
+
+        // Determine movement vector component length cap - if we ever get to this number we've accidentally raytraced too far and should stop!
+        int moveCap = (int) Math.ceil(movement.length() * breakRangeMultiplier);
+
+        // Get end point
         Vec3 endPos = startPos.add(movement.scale(breakRangeMultiplier));
         Vec3i endBlockPos = new Vec3i(
                 (int) Math.floor(endPos.x),
@@ -207,6 +211,7 @@ public final class BreakSystem {
         int stepX = movement.x < 0 ? -1 : 1;
         int stepY = movement.y < 0 ? -1 : 1;
         int stepZ = movement.z < 0 ? -1 : 1;
+
         // The value of t (distance along line) at which the coordinate of the corresponding axis changes
         double tMaxX = getTMax(startPos.x, stepX, movement.x);
         double tMaxY = getTMax(startPos.y, stepY, movement.y);
@@ -220,24 +225,24 @@ public final class BreakSystem {
             if (Math.abs(tMaxX) < Math.abs(tMaxY)) {
                 if (Math.abs(tMaxX) < Math.abs(tMaxZ)) {
                     X += stepX;
-                    if (Math.abs(X) > Level.MAX_LEVEL_SIZE) // We've gone outside the level bounds. No point continuing the traversal
+                    if (Math.abs(X) >= moveCap)
                         break;
                     tMaxX = addTDelta(tMaxX, tDeltaX);
                 } else {
                     Z += stepZ;
-                    if (Math.abs(Z) > Level.MAX_LEVEL_SIZE)
+                    if (Math.abs(Z) >= moveCap)
                         break;
                     tMaxZ = addTDelta(tMaxZ, tDeltaZ);
                 }
             } else {
                 if (Math.abs(tMaxY) < Math.abs(tMaxZ)) {
                     Y += stepY;
-                    if (level.isOutsideBuildHeight(Y))
+                    if (Math.abs(Y) >= moveCap)
                         break;
                     tMaxY = addTDelta(tMaxY, tDeltaY);
                 } else {
                     Z += stepZ;
-                    if (Math.abs(Z) > Level.MAX_LEVEL_SIZE)
+                    if (Math.abs(Z) >= moveCap)
                         break;
                     tMaxZ = addTDelta(tMaxZ, tDeltaZ);
                 }
