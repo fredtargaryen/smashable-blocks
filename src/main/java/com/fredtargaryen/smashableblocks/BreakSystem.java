@@ -189,17 +189,13 @@ public final class BreakSystem {
      * @param breakRangeMultiplier Scaling of the movement vector to compensate for lag
      */
     private void attemptToSmashBlocksInWay2(Entity e, Vec3 movement, byte breakRangeMultiplier) {
+        Level level = e.level();
         // Get starting point
         Vec3 entityPos = e.position();
         Vec3 startPos = new Vec3(
-                entityPos.x - Math.floor(entityPos.x),
-                entityPos.y - Math.floor(entityPos.y),
-                entityPos.z - Math.floor(entityPos.z));
-
-        // Determine movement vector component length cap - if we ever get to this number we've accidentally raytraced too far and should stop!
-        int moveCap = (int) Math.ceil(movement.length() * breakRangeMultiplier);
-
-        // Get end point
+                this.resetCoordToOriginBlockPos(entityPos.x),
+                this.resetCoordToOriginBlockPos(entityPos.y),
+                this.resetCoordToOriginBlockPos(entityPos.z));
         Vec3 endPos = startPos.add(movement.scale(breakRangeMultiplier));
         Vec3i endBlockPos = new Vec3i(
                 (int) Math.floor(endPos.x),
@@ -211,38 +207,38 @@ public final class BreakSystem {
         int stepX = movement.x < 0 ? -1 : 1;
         int stepY = movement.y < 0 ? -1 : 1;
         int stepZ = movement.z < 0 ? -1 : 1;
-
         // The value of t (distance along line) at which the coordinate of the corresponding axis changes
-        double tMaxX = getTMax(startPos.x, stepX, movement.x);
-        double tMaxY = getTMax(startPos.y, stepY, movement.y);
-        double tMaxZ = getTMax(startPos.z, stepZ, movement.z);
-        double tDeltaX = getTDelta(movement.x);
-        double tDeltaY = getTDelta(movement.y);
-        double tDeltaZ = getTDelta(movement.z);
+        double tMaxX = getTMax(startPos.x, stepX, Math.abs(movement.x));
+        double tMaxY = getTMax(startPos.y, stepY, Math.abs(movement.y));
+        double tMaxZ = getTMax(startPos.z, stepZ, Math.abs(movement.z));
+        double tDeltaX = getTDelta(Math.abs(movement.x));
+        double tDeltaY = getTDelta(Math.abs(movement.y));
+        double tDeltaZ = getTDelta(Math.abs(movement.z));
         List<Vec3i> hitBlocks = new ArrayList<>();
         Vec3i currentPos = Vec3i.ZERO;
+        hitBlocks.add(currentPos);
         while (!currentPos.equals(endBlockPos)) {
-            if (Math.abs(tMaxX) < Math.abs(tMaxY)) {
-                if (Math.abs(tMaxX) < Math.abs(tMaxZ)) {
+            if (tMaxX < tMaxY) {
+                if (tMaxX < tMaxZ) {
                     X += stepX;
-                    if (Math.abs(X) >= moveCap)
+                    if (Math.abs(X) > Level.MAX_LEVEL_SIZE) // We've gone outside the level bounds. No point continuing the traversal
                         break;
                     tMaxX = addTDelta(tMaxX, tDeltaX);
                 } else {
                     Z += stepZ;
-                    if (Math.abs(Z) >= moveCap)
+                    if (Math.abs(Z) > Level.MAX_LEVEL_SIZE)
                         break;
                     tMaxZ = addTDelta(tMaxZ, tDeltaZ);
                 }
             } else {
-                if (Math.abs(tMaxY) < Math.abs(tMaxZ)) {
+                if (tMaxY < tMaxZ) {
                     Y += stepY;
-                    if (Math.abs(Y) >= moveCap)
+                    if (level.isOutsideBuildHeight(Y))
                         break;
                     tMaxY = addTDelta(tMaxY, tDeltaY);
                 } else {
                     Z += stepZ;
-                    if (Math.abs(Z) >= moveCap)
+                    if (Math.abs(Z) > Level.MAX_LEVEL_SIZE)
                         break;
                     tMaxZ = addTDelta(tMaxZ, tDeltaZ);
                 }
@@ -250,8 +246,6 @@ public final class BreakSystem {
             currentPos = new Vec3i(X, Y, Z);
             hitBlocks.add(currentPos);
         }
-
-        if (hitBlocks.isEmpty()) return;
 
         HashSet<BlockPos> initialBlockPositions = this.getIntersectingBlocks(e.getBoundingBox());
         HashSet<BlockPos> hitBlockPositions = new HashSet<>();
@@ -264,6 +258,25 @@ public final class BreakSystem {
         this.smashCollectedBlockPositions(e, (float) movement.lengthSqr(), hitBlockPositions);
     }
 
+    /**
+     * Transform a coord to what it would be if the line originated in the (0,0,0) BlockPos.
+     * Essentially the idea is to get the coordinate's offset into the BlockPos.
+     * @param coord The coord
+     * @return The offset coord
+     */
+    private double resetCoordToOriginBlockPos(double coord) {
+        coord -= (int) coord;
+        if (coord < 0) return coord + 1;
+        return coord;
+    }
+
+    /**
+     * Get the x/y/z coord change point of a line
+     * @param startOnAxis The position of the start of the line on the x/y/z axis
+     * @param step Used to increment/decrement the int x/y/z coord
+     * @param axisLength The length of the x/y/z component of the line. Assumed to be positive.
+     * @return The distance along the line (as a percentage) where the int value of the x/y/z coord of a point on the line will increment/decrement
+     */
     private double getTMax(double startOnAxis, int step, double axisLength) {
         if (axisLength == 0.0) return Double.MAX_VALUE;
 
@@ -274,19 +287,24 @@ public final class BreakSystem {
         return startOnAxis / axisLength;
     }
 
+    /**
+     * Get the distance to move on the x/y/z axis to move a distance of 1 along the line
+     * @param axisLength The length of the line's x/y/z component. Assumed to be positive.
+     * @return The x/y/z component of the normalised line
+     */
     private double getTDelta(double axisLength) {
         if (axisLength == 0.0) return Double.MAX_VALUE;
 
         return 1.0 / axisLength;
     }
 
+    /**
+     * Add tDelta to the latest value of tMax, guarding against infinities.
+     * @param max The latest value of tMax. Will be at the boundary of a change in the x/y/z value.
+     * @param delta The amount to add on. Assumed to be positive.
+     * @return max + delta
+     */
     private double addTDelta(double max, double delta) {
-        if (delta == 0) return max;
-
-        if (delta < 0) {
-            if (delta == Double.MIN_VALUE) return Double.MIN_VALUE;
-        }
-
         if (delta == Double.MAX_VALUE) return Double.MAX_VALUE;
 
         return max + delta;
