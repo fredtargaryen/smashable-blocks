@@ -189,7 +189,6 @@ public final class BreakSystem {
      * @param breakRangeMultiplier Scaling of the movement vector to compensate for lag
      */
     private void attemptToSmashBlocksInWay2(Entity e, Vec3 movement, byte breakRangeMultiplier) {
-        Level level = e.level();
         // Get starting point
         Vec3 entityPos = e.position();
         Vec3 startPos = new Vec3(
@@ -201,6 +200,9 @@ public final class BreakSystem {
                 (int) Math.floor(endPos.x),
                 (int) Math.floor(endPos.y),
                 (int) Math.floor(endPos.z));
+        int xCap = Math.abs(endBlockPos.getX());
+        int yCap = Math.abs(endBlockPos.getY());
+        int zCap = Math.abs(endBlockPos.getZ());
         // Current BlockPos
         int X = 0, Y = 0, Z = 0;
         // BlockPos changes by this amount when the line moves forward
@@ -221,24 +223,24 @@ public final class BreakSystem {
             if (tMaxX < tMaxY) {
                 if (tMaxX < tMaxZ) {
                     X += stepX;
-                    if (Math.abs(X) > Level.MAX_LEVEL_SIZE) // We've gone outside the level bounds. No point continuing the traversal
+                    if (Math.abs(X) > xCap) // We have gone too far along the x axis. This is incorrect behaviour so we should stop
                         break;
                     tMaxX = addTDelta(tMaxX, tDeltaX);
                 } else {
                     Z += stepZ;
-                    if (Math.abs(Z) > Level.MAX_LEVEL_SIZE)
+                    if (Math.abs(Z) >zCap)
                         break;
                     tMaxZ = addTDelta(tMaxZ, tDeltaZ);
                 }
             } else {
                 if (tMaxY < tMaxZ) {
                     Y += stepY;
-                    if (level.isOutsideBuildHeight(Y))
+                    if (Math.abs(Y) > yCap)
                         break;
                     tMaxY = addTDelta(tMaxY, tDeltaY);
                 } else {
                     Z += stepZ;
-                    if (Math.abs(Z) > Level.MAX_LEVEL_SIZE)
+                    if (Math.abs(Z) > zCap)
                         break;
                     tMaxZ = addTDelta(tMaxZ, tDeltaZ);
                 }
