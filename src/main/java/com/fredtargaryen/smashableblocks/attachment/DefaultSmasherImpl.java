@@ -36,7 +36,7 @@ public final class DefaultSmasherImpl implements Smasher {
 
     @Override
     public byte getBreakRangeMultiplier() {
-        return 2;
+        return 3;
     }
 
     @Override
