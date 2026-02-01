@@ -65,6 +65,8 @@ public static void addCustomBehaviours(AddSmashableBehavioursEvent event) {
 ```
 If you choose a behaviour name that was already added to `SmashableImporter` you will overwrite it, so unless you really want to, choose a unique name for your custom behaviour. You could call it `"mymod:mybehaviourname"`, `ResourceLocation`-style.
 
+To implement your custom behaviour you can follow the examples [here](https://github.com/fredtargaryen/smashable-blocks/tree/main/src/main/java/com/fredtargaryen/smashableblocks/behaviour/impl).
+
 ### Pull Requests
 Any pull requests are very welcome. There are currently no standards for pull requests but clean code which
 follows the existing patterns is appreciated. If you are making a new feature, message me first to see
