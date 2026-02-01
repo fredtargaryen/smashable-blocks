@@ -32,8 +32,8 @@ import java.util.List;
 
 import static com.fredtargaryen.smashableblocks.Tags.*;
 
-public final class BreakSystem {
-    public static final BreakSystem INSTANCE;
+public final class SmashSystem {
+    public static final SmashSystem INSTANCE;
 
     private final HashMap<Block, SmashableBehaviourParentInternal> blockBehaviourMap;
     private final HashSet<Block> blocksWithStateOverrides;
@@ -42,10 +42,10 @@ public final class BreakSystem {
     private final SmashableImporter smashableImporter;
 
     static {
-        INSTANCE = new BreakSystem();
+        INSTANCE = new SmashSystem();
     }
 
-    public BreakSystem() {
+    public SmashSystem() {
         this.blockBehaviourMap = new HashMap<>();
         this.stateBehaviourMap = new HashMap<>();
         this.blocksWithStateOverrides = new HashSet<>();
