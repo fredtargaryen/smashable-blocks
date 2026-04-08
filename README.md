@@ -12,8 +12,8 @@ The classic use case is to make glass blocks fragile, so that a player could fal
 ## Customising Smashable Blocks
 You don't need to make a mod to customise which blocks can be smashed; the minimum you need is a datapack.
 Examples of how to customise blocks' behaviour in a json file can be found [here](https://github.com/fredtargaryen/smashable-blocks/tree/main/examples).
-Just create a `<your namespace>/smashableblocks/blocks/<your filename>.json` file in your `data` folder and add the blocks; Smashable Blocks will identify them.
-You can have as many such files as you want and their names are up to you. If you're single-player you can just rename the `examples` file in the mod jar to `<your filename>.json` and edit the `blocks` folder to your liking.
+Just create a `<your namespace>/smashableblocks/block/<your filename>.json` file in your `data` folder and add the blocks; Smashable Blocks will identify them.
+You can have as many such files as you want and their names are up to you. If you're single-player you can just rename the `examples` file in the mod jar to `<your filename>.json` and edit the `block` folder to your liking.
 
 ## Customising Which Entities Can Smash Blocks
 Three entity type tags help define which entities can smash blocks:
