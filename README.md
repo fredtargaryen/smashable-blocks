@@ -1,22 +1,21 @@
 # Smashable Blocks
-Smashable Blocks is a Minecraft NeoForge utility mod which, via a json file interface, allows customisation of the behaviour of any block when smashed (here defined as collided with at speed).
+Smashable Blocks is a Minecraft mod which, via a json file interface, allows customisation of the behaviour of any block when smashed (here defined as collided with at speed).
 The classic use case is to make glass blocks fragile, so that a player could fall or fire an arrow through them, but there are countless other possibilities.
 
-### Installation
-For multiplayer, Smashable Blocks only needs to be installed server-side.
+## Helpful Links
+- [CurseForge project page](https://www.curseforge.com/minecraft/mc-mods/smashable-blocks)
+- [Modrinth project page](https://modrinth.com/project/smashable-blocks)
+- Please report any issues on [the Issues page](https://github.com/fredtargaryen/smashable-blocks/issues)
 
-### Releases
-You can find the latest Smashable Blocks release files at:
-- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/smashable-blocks)
-- [Modrinth](https://modrinth.com/project/smashable-blocks/versions)
 
-### Customising Smashable Blocks
+
+## Customising Smashable Blocks
 You don't need to make a mod to customise which blocks can be smashed; the minimum you need is a datapack.
 Examples of how to customise blocks' behaviour in a json file can be found [here](https://github.com/fredtargaryen/smashable-blocks/tree/main/examples).
 Just create a `<your namespace>/smashableblocks/blocks/<your filename>.json` file in your `data` folder and add the blocks; Smashable Blocks will identify them.
 You can have as many such files as you want and their names are up to you. If you're single-player you can just rename the `examples` file in the mod jar to `<your filename>.json` and edit the `blocks` folder to your liking.
 
-### Customising Which Entities Can Smash Blocks
+## Customising Which Entities Can Smash Blocks
 Three entity type tags help define which entities can smash blocks:
 - Entities in the `smashableblocks:excluded` tag cannot smash blocks.
 - Entities in the `smashableblocks:smashers_light` tag can smash blocks. They are considered lightweight, such as arrows and fireworks.
@@ -25,7 +24,7 @@ Three entity type tags help define which entities can smash blocks:
 You can customise which entities are in which tags in your own mod or datapack.
 
 When a new entity joins the level, Smashable Blocks searches for its entity type in the above tags, in the above order.
-If it isn't excluded, it is assigned the corresponding weight, which may affect which blocks it can smash. 
+If it isn't `excluded`, it is assigned the corresponding weight, which may affect which blocks it can smash. 
 An example of how weight can be used is given in the above link.
 
 If the entity:
@@ -35,9 +34,6 @@ If the entity:
 
 It will be assigned a heavy weight.
 This would be accurate for most entities matching that description, but the main reasons are to avoid the need for very long tag files to contain every living entity, as well as the need for mods to add their entities to the tag to work with Smashable Blocks.
-
-### Issues
-Please report any issues on the [Issues page](https://github.com/fredtargaryen/smashable-blocks/issues).
 
 ## Information for Developers
 
@@ -64,6 +60,8 @@ public static void addCustomBehaviours(AddSmashableBehavioursEvent event) {
 }
 ```
 If you choose a behaviour name that was already added to `SmashableImporter` you will overwrite it, so unless you really want to, choose a unique name for your custom behaviour. You could call it `"mymod:mybehaviourname"`, `ResourceLocation`-style.
+
+To implement your custom behaviour you can follow the examples [here](https://github.com/fredtargaryen/smashable-blocks/tree/main/src/main/java/com/fredtargaryen/smashableblocks/behaviour/impl).
 
 ### Pull Requests
 Any pull requests are very welcome. There are currently no standards for pull requests but clean code which

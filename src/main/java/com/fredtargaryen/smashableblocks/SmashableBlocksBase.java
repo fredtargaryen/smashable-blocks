@@ -39,7 +39,7 @@ public final class SmashableBlocksBase {
 
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
-        BreakSystem.INSTANCE.setup(event.getServer());
+        SmashSystem.INSTANCE.setup(event.getServer());
     }
 
     //////////////////

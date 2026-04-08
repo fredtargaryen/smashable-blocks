@@ -34,7 +34,7 @@ public final class ExplodeBehaviour extends SmashableBehaviourInternal {
         Optional<String> destroyBlocks = sb.getParameterValue("destroy_blocks");
         if (destroyBlocks.isEmpty()) {
             // Assume false
-            this.interaction = Level.ExplosionInteraction.BLOW;
+            this.interaction = Level.ExplosionInteraction.NONE;
         }
         else {
             switch(destroyBlocks.get()) {
@@ -42,7 +42,7 @@ public final class ExplodeBehaviour extends SmashableBehaviourInternal {
                     this.interaction = Level.ExplosionInteraction.BLOCK;
                     break;
                 case "false":
-                    this.interaction = Level.ExplosionInteraction.BLOW;
+                    this.interaction = Level.ExplosionInteraction.NONE;
                     break;
                 default:
                     throw new BehaviourValidationException("Invalid value \"%s\" for destroy_blocks. Should be either \"true\" or \"false\"", destroyBlocks.get());
