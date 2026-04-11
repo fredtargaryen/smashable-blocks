@@ -7,7 +7,7 @@ import com.fredtargaryen.smashableblocks.behaviour.SmashableBehaviour;
 import com.fredtargaryen.smashableblocks.behaviour.SmashableBehaviourInternal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -25,9 +25,9 @@ public final class SoundBehaviour extends SmashableBehaviourInternal {
         Optional<String> soundResLoc = sb.getParameterValue("sound");
         if (soundResLoc.isEmpty()) throw BehaviourValidationException.missingParameter("sound");
         String soundLocation = soundResLoc.get();
-        ResourceLocation rl = ResourceLocation.tryParse(soundLocation);
-        if (rl == null) throw new BehaviourValidationException("Invalid sound resource location '%s'", soundLocation);
-        SoundEvent se = BuiltInRegistries.SOUND_EVENT.get(rl);
+        Identifier soundId = Identifier.tryParse(soundLocation);
+        if (soundId == null) throw new BehaviourValidationException("Invalid sound resource location '%s'", soundLocation);
+        SoundEvent se = BuiltInRegistries.SOUND_EVENT.get(soundId);
         if (se == null) {
             throw new BehaviourValidationException("Unrecognised sound resource location '%s'", soundLocation);
         }
