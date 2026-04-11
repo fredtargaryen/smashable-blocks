@@ -2,14 +2,14 @@
 // See README.md for full copyright notice
 package com.fredtargaryen.smashableblocks;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 // Change version number in: build.gradle; mods.toml
 public class DataReference {
     public static final String MODID = "smashableblocks";
 
-    public static ResourceLocation getResourceLocation(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    public static Identifier getIdentifier(String path) {
+        return Identifier.fromNamespaceAndPath(MODID, path);
     }
 
     //The minimum speed a permitted entity must be travelling to break a fragile glass block.

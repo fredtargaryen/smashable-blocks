@@ -5,7 +5,7 @@ package com.fredtargaryen.smashableblocks.util;
 import com.fredtargaryen.smashableblocks.behaviour.BehaviourValidationException;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -53,8 +53,8 @@ public class BlockStateUtil {
         if (description.nameIsTag) {
             try {
                 // Get all blocks under the tag named in description
-                TagKey<Block> tag = BlockTags.create(ResourceLocation.parse(description.name));
-                blocks = BuiltInRegistries.BLOCK.getTag(tag).get().stream().map(Holder::value).toList();
+                TagKey<Block> tag = BlockTags.create(Identifier.parse(description.name));
+                blocks = BuiltInRegistries.BLOCK.getOrThrow(tag).stream().map(Holder::value).toList();
             } catch (NoSuchElementException nsee) {
                 throw new BehaviourValidationException(String.format("The tag string '%s' does not exist.", description.name));
             }
@@ -94,12 +94,12 @@ public class BlockStateUtil {
     }
 
     public static Block getBlockFromString(String state) {
-        return BuiltInRegistries.BLOCK.get(ResourceLocation.parse(state));
+        return BuiltInRegistries.BLOCK.getValue(Identifier.parse(state));
     }
 
     /**
      * Check the string matches any of the valid regexes for BlockState set descriptions.
-     * If so, split it into the Block ResourceLocation, and properties if any are available
+     * If so, split it into the Block Identifier, and properties if any are available
      *
      * @param string the raw string
      * @return A map of each part of the string
