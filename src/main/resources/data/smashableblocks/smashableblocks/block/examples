@@ -62,7 +62,7 @@
         "parameters": [
           {
             "name": "strength",
-            "value": "8"
+            "value": "5"
           },
           {
             "name": "destroy_blocks",
