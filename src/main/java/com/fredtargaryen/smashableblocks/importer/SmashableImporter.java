@@ -50,7 +50,7 @@ public final class SmashableImporter {
                                                HashMap<Block, SmashableBehaviourParentInternal> blockBehaviourMap,
                                                HashSet<Block> blocksWithStateOverrides,
                                                HashMap<BlockState, SmashableBehaviourParentInternal> stateBehaviourMap) {
-        server.registryAccess().registryOrThrow(BLOCK_REGISTRY_KEY).entrySet()
+        server.registryAccess().lookupOrThrow(BLOCK_REGISTRY_KEY).entrySet()
                 .forEach(entry -> {
                     SmashableBlocksBase.info(String.format("Loading smashable behaviour data file %s", entry.getKey()));
                     List<SmashableBehaviourParent> parents = entry.getValue();

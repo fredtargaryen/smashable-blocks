@@ -83,12 +83,12 @@ public final class SmashSystem {
         Entity e = event.getEntity();
         if (!event.getLevel().isClientSide()) {
             Smasher s = new DefaultSmasherImpl(e);
+            if (e.is(EXCLUDED)) return;
             EntityType<?> et = e.getType();
-            if (et.is(EXCLUDED)) return;
-            if (et.is(SMASHERS_LIGHT)) {
+            if (e.is(SMASHERS_LIGHT)) {
                 s.setWeight(DataReference.SMASHER_WEIGHT_LIGHT);
                 e.setData(AttachmentTypes.SMASHER, s);
-            } else if (et.is(SMASHERS_HEAVY)) {
+            } else if (e.is(SMASHERS_HEAVY)) {
                 s.setWeight(DataReference.SMASHER_WEIGHT_HEAVY);
                 e.setData(AttachmentTypes.SMASHER, s);
             }

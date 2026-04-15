@@ -6,8 +6,9 @@ import com.fredtargaryen.smashableblocks.behaviour.BehaviourValidationException;
 import com.fredtargaryen.smashableblocks.behaviour.SmashableBehaviour;
 import com.fredtargaryen.smashableblocks.behaviour.SmashableBehaviourInternal;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -22,16 +23,16 @@ public final class SoundBehaviour extends SmashableBehaviourInternal {
 
     public SoundBehaviour(SmashableBehaviour sb) throws BehaviourValidationException {
         super(sb);
-        Optional<String> soundResLoc = sb.getParameterValue("sound");
-        if (soundResLoc.isEmpty()) throw BehaviourValidationException.missingParameter("sound");
-        String soundLocation = soundResLoc.get();
-        ResourceLocation rl = ResourceLocation.tryParse(soundLocation);
-        if (rl == null) throw new BehaviourValidationException("Invalid sound resource location '%s'", soundLocation);
-        SoundEvent se = BuiltInRegistries.SOUND_EVENT.get(rl);
-        if (se == null) {
-            throw new BehaviourValidationException("Unrecognised sound resource location '%s'", soundLocation);
+        Optional<String> soundIdHolder = sb.getParameterValue("sound");
+        if (soundIdHolder.isEmpty()) throw BehaviourValidationException.missingParameter("sound");
+        String soundIdStr = soundIdHolder.get();
+        Identifier soundId = Identifier.tryParse(soundIdStr);
+        if (soundId == null) throw new BehaviourValidationException("Invalid sound identifier '%s'", soundIdStr);
+        Optional<Holder.Reference<SoundEvent>> se = BuiltInRegistries.SOUND_EVENT.get(soundId);
+        if (se.isEmpty()) {
+            throw new BehaviourValidationException("Unrecognised sound identifier '%s'", soundIdStr);
         }
-        this.soundToPlay = se;
+        this.soundToPlay = se.get().value();
     }
 
     public void onSmash(Level level, Entity crasher, BlockPos pos, BlockState state, float speedSq, BlockEntity be) {
